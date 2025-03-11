@@ -34,6 +34,7 @@ public class UserService {
         return dtos;
     }
 
+    @Transactional
     public UserUpdateResponse update(Long userId, UserUpdateRequest dto) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new IllegalStateException("해당 유저가 존재하지 않습니다.")
@@ -49,6 +50,7 @@ public class UserService {
                 user.getPhoneNumber());
     }
 
+    @Transactional
     public void updatePassword(Long userId, UpdatePasswordRequest dto) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new IllegalStateException("해당 유저가 존재하지 않습니다.")
