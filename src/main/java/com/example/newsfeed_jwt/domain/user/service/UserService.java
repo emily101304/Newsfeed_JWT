@@ -1,9 +1,9 @@
 package com.example.newsfeed_jwt.domain.user.service;
 
-import com.example.newsfeed_jwt.domain.user.dto.UpdatePasswordRequest;
-import com.example.newsfeed_jwt.domain.user.dto.UserResponse;
-import com.example.newsfeed_jwt.domain.user.dto.UserUpdateRequest;
-import com.example.newsfeed_jwt.domain.user.dto.UserUpdateResponse;
+import com.example.newsfeed_jwt.domain.user.dto.request.UpdatePasswordRequest;
+import com.example.newsfeed_jwt.domain.user.dto.response.UserResponse;
+import com.example.newsfeed_jwt.domain.user.dto.request.UserUpdateRequest;
+import com.example.newsfeed_jwt.domain.user.dto.response.UserUpdateResponse;
 import com.example.newsfeed_jwt.domain.user.entity.User;
 import com.example.newsfeed_jwt.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

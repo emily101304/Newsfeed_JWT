@@ -1,4 +1,4 @@
-package com.example.newsfeed_jwt.domain.user.dto;
+package com.example.newsfeed_jwt.domain.user.dto.response;
 
 import lombok.Getter;
 

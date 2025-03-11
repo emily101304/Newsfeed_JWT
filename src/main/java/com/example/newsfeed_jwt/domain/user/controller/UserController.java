@@ -1,9 +1,9 @@
 package com.example.newsfeed_jwt.domain.user.controller;
 
-import com.example.newsfeed_jwt.domain.user.dto.UpdatePasswordRequest;
-import com.example.newsfeed_jwt.domain.user.dto.UserResponse;
-import com.example.newsfeed_jwt.domain.user.dto.UserUpdateRequest;
-import com.example.newsfeed_jwt.domain.user.dto.UserUpdateResponse;
+import com.example.newsfeed_jwt.domain.user.dto.request.UpdatePasswordRequest;
+import com.example.newsfeed_jwt.domain.user.dto.response.UserResponse;
+import com.example.newsfeed_jwt.domain.user.dto.request.UserUpdateRequest;
+import com.example.newsfeed_jwt.domain.user.dto.response.UserUpdateResponse;
 import com.example.newsfeed_jwt.domain.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class UserController {
     @PatchMapping("/api/v1/users/{userId}")
     private UserUpdateResponse updateMe(
             @PathVariable Long userId,
-            @RequestBody UserUpdateRequest request
+            @Valid @RequestBody UserUpdateRequest request
     ) {
         return userService.update(userId, request);
     }
