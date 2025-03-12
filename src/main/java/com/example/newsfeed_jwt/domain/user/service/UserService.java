@@ -55,14 +55,14 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new IllegalStateException("해당 유저가 존재하지 않습니다.")
         );
-        checkPassword(user.getPassword(),dto.getNewPassword());
+        checkPassword(user.getPassword(),dto.getOldPassword());
         changePassword(user.getPassword(),dto.getNewPassword());
         user.updatePassword(dto.getNewPassword());
     }
 
-    private void checkPassword(String password, String newPassword) {
-        if (!password.equals(newPassword)) {
-            throw new IllegalStateException("입력하신 비밀번호가 일치하지 않습니다.");
+    private void checkPassword(String password, String oldPassword) {
+        if (!password.equals(oldPassword)) {
+            throw new IllegalStateException("입력하신 비밀번호가 현재 비밀번호와 일치하지 않습니다.");
         }
     }
 
