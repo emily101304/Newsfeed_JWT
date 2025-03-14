@@ -1,0 +1,13 @@
+package com.example.newsfeed_jwt.domain.auth.dto.response;
+
+import lombok.Getter;
+
+@Getter
+public class SignInResponse {
+
+    private final String bearerJwt;
+
+    public SignInResponse(String bearerJwt) {
+        this.bearerJwt = bearerJwt;
+    }
+}
