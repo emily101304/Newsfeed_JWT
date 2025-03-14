@@ -1,6 +1,7 @@
 package com.example.newsfeed_jwt.domain.post.controller;
 
-import com.example.newsfeed_jwt.domain.post.dto.request.DeletePostRequest;
+import com.example.newsfeed_jwt.domain.auth.annotation.Auth;
+import com.example.newsfeed_jwt.domain.auth.dto.AuthUser;
 import com.example.newsfeed_jwt.domain.post.dto.request.PostRequest;
 import com.example.newsfeed_jwt.domain.post.dto.request.UpdatePostRequest;
 import com.example.newsfeed_jwt.domain.post.dto.response.PostResponse;
@@ -21,15 +22,15 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/api/v1/posts")
-    public PostResponse createPost(@Valid @RequestBody PostRequest request) {
-        return postService.createPost(request);
+    public PostResponse createPost(
+            @Auth AuthUser authUser,
+            @Valid @RequestBody PostRequest request) {
+        return postService.createPost(authUser,request);
     }
 
     @GetMapping("/api/v1/posts")
     public Page<PostResponse> getAllPosts(
             @PageableDefault(
-                    page = 0,
-                    size = 10,
                     sort = "createdAt",
                     direction = Sort.Direction.DESC) Pageable pageable
     ) {
@@ -44,13 +45,17 @@ public class PostController {
     @PatchMapping("/api/v1/posts/{postId}")
     public PostResponse updatePost(
             @PathVariable Long postId,
+            @Auth AuthUser authUser,
             @Valid @RequestBody UpdatePostRequest request
     ) {
-        return postService.update(postId,request);
+        return postService.update(postId,authUser,request);
     }
 
     @DeleteMapping("/api/v1/posts/{postId}")
-    public void deletePost(@PathVariable Long postId, @Valid @RequestBody DeletePostRequest request) {
-        postService.delete(postId, request);
+    public void deletePost(
+            @PathVariable Long postId,
+            @Auth AuthUser authUser
+    ) {
+        postService.delete(postId, authUser);
     }
 }

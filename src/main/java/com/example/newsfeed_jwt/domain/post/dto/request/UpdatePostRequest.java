@@ -18,7 +18,4 @@ public class UpdatePostRequest {
 
     @NotBlank
     private String image;
-
-    @NotBlank
-    private Long userId;
 }

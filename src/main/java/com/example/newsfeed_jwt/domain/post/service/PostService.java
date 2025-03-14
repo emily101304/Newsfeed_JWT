@@ -1,6 +1,6 @@
 package com.example.newsfeed_jwt.domain.post.service;
 
-import com.example.newsfeed_jwt.domain.post.dto.request.DeletePostRequest;
+import com.example.newsfeed_jwt.domain.auth.dto.AuthUser;
 import com.example.newsfeed_jwt.domain.post.dto.request.PostRequest;
 import com.example.newsfeed_jwt.domain.post.dto.request.UpdatePostRequest;
 import com.example.newsfeed_jwt.domain.post.dto.response.PostResponse;
@@ -22,8 +22,8 @@ public class PostService {
     private final UserRepository userRepository;
 
     @Transactional
-    public PostResponse createPost(PostRequest request) {
-        User user = userRepository.findById(request.getUserId()).orElseThrow(
+    public PostResponse createPost(AuthUser authUser, PostRequest request) {
+        User user = userRepository.findById(authUser.getUserId()).orElseThrow(
                 () -> new IllegalStateException("해당 유저는 존재하지 않습니다.")
         );
 
@@ -56,13 +56,13 @@ public class PostService {
     }
 
     @Transactional
-    public PostResponse update(Long postId, UpdatePostRequest request) {
+    public PostResponse update(Long postId, AuthUser authUser, UpdatePostRequest request) {
 
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new IllegalStateException("해당 게시글은 존재하지 않습니다.")
         );
 
-        if (!post.getUser().getId().equals(request.getUserId())) {
+        if (!post.getUser().getId().equals(authUser.getUserId())) {
             throw new IllegalStateException("해당 게시글을 작성한 유저가 아님으로 수정 불가합니다.");
         }
 
@@ -71,12 +71,12 @@ public class PostService {
     }
 
     @Transactional
-    public void delete(Long postId, DeletePostRequest request) {
+    public void delete(Long postId, AuthUser authUser) {
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new IllegalStateException("해당 게시글은 존재하지 않습니다.")
         );
 
-        if (!post.getUser().getId().equals(request.getUserId())) {
+        if (!post.getUser().getId().equals(authUser.getUserId())) {
             throw new IllegalStateException("해당 게시글을 작성한 사람이 아님으로 삭제 불가합니다.");
         }
         postRepository.deleteById(postId);
