@@ -34,7 +34,7 @@ public class PostController {
     @GetMapping("/api/v1/posts")
     public Page<PostResponse> getAllPosts(
             @PageableDefault(
-                    sort = "createdAt",
+                    sort = "modifiedAt",
                     direction = Sort.Direction.DESC) Pageable pageable,
             @RequestParam(value = "startDate", required = false) LocalDateTime startDate,
             @RequestParam(value = "endDate", required = false) LocalDateTime endDate
