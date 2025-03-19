@@ -14,6 +14,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -32,9 +35,22 @@ public class PostController {
     public Page<PostResponse> getAllPosts(
             @PageableDefault(
                     sort = "createdAt",
-                    direction = Sort.Direction.DESC) Pageable pageable
+                    direction = Sort.Direction.DESC) Pageable pageable,
+            @RequestParam(value = "startDate", required = false) LocalDateTime startDate,
+            @RequestParam(value = "endDate", required = false) LocalDateTime endDate
     ) {
-        return postService.getAllPosts(pageable);
+        if (startDate == null && endDate == null) {
+            return postService.getAllPosts(pageable);
+        } else {
+            return postService.findByCreatedAtBetween(startDate, endDate, pageable);
+        }
+    }
+
+    @GetMapping("/api/v1/posts/follows/myfollowers")
+    public List<PostResponse> getAllMyFollowerPosts(
+            @Auth AuthUser authUser
+    ) {
+        return postService.getAllMyFollowerPosts(authUser.getUserId());
     }
 
     @GetMapping("/api/v1/posts/{postId}")

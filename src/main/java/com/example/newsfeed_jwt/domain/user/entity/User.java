@@ -1,12 +1,14 @@
 package com.example.newsfeed_jwt.domain.user.entity;
 
 import com.example.newsfeed_jwt.common.entity.BaseEntity;
+import com.example.newsfeed_jwt.domain.follow.entity.Follow;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Entity
@@ -33,6 +35,12 @@ public class User extends BaseEntity {
 
     @Column(unique = true, nullable = false)
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "followee", fetch = FetchType.LAZY)
+    private Set<Follow> followers = new HashSet<>();
+
+    @OneToMany(mappedBy = "follower", fetch = FetchType.LAZY)
+    private Set<Follow> followees = new HashSet<>();
 
     public User(String name, String email, String password, String image, LocalDate birthday, String phoneNumber) {
         this.name = name;
