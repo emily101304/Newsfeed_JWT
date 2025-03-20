@@ -59,7 +59,7 @@ public class AuthService {
                 request.getImage(),
                 request.getBirthday(),
                 request.getPhoneNumber());
-        User savedUser = userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Transactional(readOnly = true)

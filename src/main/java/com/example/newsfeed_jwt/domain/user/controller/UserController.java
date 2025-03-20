@@ -1,5 +1,7 @@
 package com.example.newsfeed_jwt.domain.user.controller;
 
+import com.example.newsfeed_jwt.domain.auth.annotation.Auth;
+import com.example.newsfeed_jwt.domain.auth.dto.AuthUser;
 import com.example.newsfeed_jwt.domain.user.dto.request.UpdatePasswordRequest;
 import com.example.newsfeed_jwt.domain.user.dto.response.UserResponse;
 import com.example.newsfeed_jwt.domain.user.dto.request.UserUpdateRequest;
@@ -22,19 +24,19 @@ public class UserController {
         return userService.getAll();
     }
 
-    @PatchMapping("/api/v1/users/{userId}")
+    @PatchMapping("/api/v1/users/{userId}/me")
     private UserUpdateResponse updateMe(
-            @PathVariable Long userId,
+            @Auth AuthUser authUser,
             @Valid @RequestBody UserUpdateRequest request
     ) {
-        return userService.update(userId, request);
+        return userService.update(authUser, request);
     }
 
-    @PatchMapping("/api/v1/users/{userId}")
+    @PatchMapping("/api/v1/users/{userId}/passwords")
     private void updatePassword(
-            @PathVariable Long userId,
+            @Auth AuthUser authUser,
             @Valid @RequestBody UpdatePasswordRequest request
     ) {
-        userService.updatePassword(userId, request);
+        userService.updatePassword(authUser, request);
     }
 }

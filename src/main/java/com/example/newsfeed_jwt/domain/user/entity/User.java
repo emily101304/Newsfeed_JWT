@@ -51,10 +51,11 @@ public class User extends BaseEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    public void update(String name, String image, LocalDate birthday) {
+    public void update(String name, String image, LocalDate birthday, String phoneNumber) {
         this.name = name;
         this.image = image;
         this.birthday = birthday;
+        this.phoneNumber = phoneNumber;
     }
 
     public void updatePassword(String password) {
