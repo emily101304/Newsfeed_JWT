@@ -28,8 +28,10 @@ public class AuthController {
 //    }
 
     @PostMapping("/api/v1/auth/signup")
-    public void signUp(@Valid @RequestBody SignUpRequest request) {
+    public String signUp(@Valid @RequestBody SignUpRequest request) {
+        System.out.println("start");
         authService.signUp(request);
+        return "회원가입 완료";
     }
 
     @PostMapping("/api/v1/auth/signin")
